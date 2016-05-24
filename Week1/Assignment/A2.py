@@ -1,5 +1,4 @@
-### A1: Modifivation of "direct_pi_multirun.py" so that it computes the root mean square (rms) deviation:
-# Downloaded from Coursera
+### A2: A1 plus plotting the function 1.642/sqrt(N_trials)
 
 import random, math, pylab
 
@@ -24,6 +23,7 @@ for poweroftwo in range(4, 13):
     n_trials_list.append(n_trials)
 
 pylab.plot(n_trials_list, sigmasqs, 'o')
+pylab.plot([10.0, 10000.0], [1.642 / math.sqrt(10.0), 1.642 / math.sqrt(10000.0)])
 pylab.xscale('log')
 pylab.yscale('log')
 pylab.xlabel('number of trials')
