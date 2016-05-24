@@ -1,3 +1,5 @@
+# Demo of Mathematical Condition 2 for Markov_chain Sampling : Formation of piT must be APERIODIC
+# We allow a pebble to remain in the same position with probability = epsilon
 import numpy
 
 epsilon = 0.01
