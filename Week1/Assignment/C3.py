@@ -30,10 +30,17 @@ for i in range(poweroftwo):
         mean += x + y
         mean_sq += x ** 2 + y ** 2
         new_data.append((x + y) / 2.0 )
-    errors.append(math.sqrt(mean_sq / N - (mean / N) ** 2) / math.sqrt(N))
+    error = math.sqrt(mean_sq / N - (mean / N) ** 2) / math.sqrt(N)
+    errors.append(error)
     bunches.append(i)
     data = new_data[:]
-    print mean / float(N), 'mean value, estimate of pi'
+    piEst = mean / float(N)
+    diffEstAndPi = math.fabs(piEst - math.pi)
+    print piEst, 'mean value, estimate of pi'
+    print '|piEst - pi|: ', diffEstAndPi
+    print ' Plateau Error: ', error
+    diff = math.fabs(diffEstAndPi - error)  
+    print diff, 'difference'
 pylab.plot(bunches, errors, 'o')
 pylab.xlabel('iteration')
 pylab.ylabel('apparent error')
