@@ -4,6 +4,7 @@ N = 4
 sigma = 0.2
 condition = False
 while condition == False:
+    # key elemnt: selct random position for disk
     L = [(random.uniform(sigma, 1.0 - sigma), random.uniform(sigma, 1.0 - sigma))]
     for k in range(1, N):
         a = (random.uniform(sigma, 1.0 - sigma), random.uniform(sigma, 1.0 - sigma))

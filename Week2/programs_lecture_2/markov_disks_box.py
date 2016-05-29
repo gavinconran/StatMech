@@ -6,6 +6,7 @@ sigma_sq = sigma ** 2
 delta = 0.1
 n_steps = 1000
 for steps in range(n_steps):
+    # key element: random choice of one disk whose coorditaes we alter slightly
     a = random.choice(L)
     b = [a[0] + random.uniform(-delta, delta), a[1] + random.uniform(-delta, delta)]
     min_dist = min((b[0] - c[0]) ** 2 + (b[1] - c[1]) ** 2 for c in L if c != a)
