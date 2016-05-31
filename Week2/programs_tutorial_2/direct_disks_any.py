@@ -1,3 +1,7 @@
+# Computes and plots P_aacept rates using two technnnnniques:
+# 1: Compute P_accept using numerical evaluation of p_accept
+# 2: Compute P_accept using 1st   order Virial expansion --> exp(-2(N-1)*eta)
+
 import random, math, pylab
 
 def dist(x, y):
@@ -11,6 +15,7 @@ N = 16
 n_confs = 10 ** 5
 pairs = [(i, j) for i in range(N - 1) for j in range(i + 1, N)]
 eta_max_list = []
+# Compute P_accept using numerical evaluation of p_accept
 for conf in xrange(n_confs):
     L = [(random.random(), random.random()) for k in range(N)]
     sigma_max = min(dist(L[i], L[j]) for i, j in pairs) / 2.0
@@ -21,6 +26,7 @@ for conf in xrange(n_confs):
 pylab.figure()
 n, bins, patches = pylab.hist(eta_max_list, 100, histtype='step', cumulative=-1, 
                    log=True, normed=True, label="numerical evaluation of p_accept")
+# Compute P_accept using 1st   order Virial expansion --> exp(-2(N-1)*eta)
 explaw = [math.exp( - 2.0 * (N - 1) * eta) for eta in bins]
 pylab.plot(bins, explaw, 'r--', linewidth=1.5, label="1st order virial expansion")
 pylab.xlabel('density eta')
