@@ -1,5 +1,6 @@
 import random, math
 
+# function to test periodic boundary conditions
 def dist(x,y):
     d_x = abs(x[0] - y[0]) % 1.0
     d_x = min(d_x, 1.0 - d_x)

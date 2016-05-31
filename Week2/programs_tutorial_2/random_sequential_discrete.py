@@ -1,3 +1,7 @@
+# 1 dimensional simulation with conditions
+# does NOT create an equiprobable distribution of configurations 
+# Does not use TABULA RASA
+
 import random
 
 configurations = {(0, 3): 'a', (0, 4): 'b', (1, 4): 'c', 
