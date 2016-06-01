@@ -2,6 +2,10 @@
 '''
 import random
 
+import random
+for iter in range(1000000):
+    position = (position + 1) % N
+
 N = 20; position = 0
 for iter in range(1000000):
     if random.uniform(0.0, 1.0)  < 0.4: 
