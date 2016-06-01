@@ -16,8 +16,8 @@ def direct_disks_box(N, sigma):
 
 
 sigma = 0.15
-del_xy = 0.10 #0.05
-n_runs = 1000000
+del_xy = 0.05
+n_runs = 5000000  #1000000
 
 # Using small boxes [x - del_xy, x + del_xy], etc, 
 # the program direct_disks_box_multirun.py is modified

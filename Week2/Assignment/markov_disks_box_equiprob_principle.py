@@ -19,7 +19,7 @@ def markov_disks_box(N, sigma, delta, L):
 
 sigma = 0.15
 delta = 0.1
-n_runs = 1000000
+n_runs =  5000000  #1000000
 del_xy = 0.05
 
 conf_a = ((0.30, 0.30), (0.30, 0.70), (0.70, 0.30), (0.70,0.70))
