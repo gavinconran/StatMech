@@ -1,5 +1,6 @@
 # direct sampling algorithm without rejections
 # will be discussed in this week's tutorial
+# which gives an analytical solution without rejections
 
 
 import random
