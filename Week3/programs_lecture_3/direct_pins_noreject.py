@@ -1,9 +1,13 @@
+# direct sampling algorithm without rejections
+# will be discussed in this week's tutorial
+
+
 import random
 
-N = 10
-L = 20.0
-sigma = 0.75
-n_runs = 800
+N = 15 #10  # Number of pegs
+L = 1.0 #20.0  # Length of line
+sigma = 0.75  # width of pin
+n_runs = 800 # number of configurations
 for run in range(n_runs):
     y = [random.uniform(0.0, L - 2 * N * sigma) for k in range(N)]
     y.sort()

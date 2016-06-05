@@ -1,10 +1,14 @@
+# generates random configurations of N clothes-pins using the tabula rasa rule.
+# but uses sorting trick
+
 import random
 
 # Good example of using sort to improve the running time of an algorithm
-N = 15
-L = 10.0
+N = 5    # 15
+L = 1.0  # 10.0
 sigma = 0.075
 n_configs = 100
+tabula = 0
 for config in range(n_configs):
     while True:
         x = [random.uniform(sigma, L - sigma) for k in range(N)]
@@ -14,4 +18,6 @@ for config in range(n_configs):
             print x
             break
         else:
-            print "TABULA RASA"
+            tabula += 1
+            
+print tabula / float(n_configs)
