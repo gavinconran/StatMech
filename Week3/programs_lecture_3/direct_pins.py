@@ -11,5 +11,6 @@ for config in range(n_configs):
         for k in range(len(x) - 1):
             if abs(x[-1] - x[k]) < 2.0 * sigma:
                 x = []
+                print "TABULA RASA"
                 break
     print x
