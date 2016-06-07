@@ -3,7 +3,7 @@ import random, pylab
 N = 24
 L = 30.0
 sigma = 0.5
-n_runs = 1000
+n_runs = 1000000
 data = []
 for run in range(n_runs):
     Lprime = L - 2.0 * sigma
