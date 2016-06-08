@@ -21,8 +21,8 @@ for iter in range(n_iter):
         position = new_position
     pos_list.append(position)
 
-
-# C5
+"""
+# C5: The Correct Metropolis Algorithm
 for iter in range(n_iter):
     dir = random.choice([-1, 1])
     new_position = (position + dir) % N
@@ -31,6 +31,7 @@ for iter in range(n_iter):
     pos_list.append(position)
 
 
+"""
 # A6
 
 for iter in range(n_iter):
@@ -52,7 +53,7 @@ for iter in range(n_iter):
             position = new_position
     pos_list.append(position)
 
-"""
+
 # C6
 for iter in range(n_iter):
     Upsilon = random.uniform(0.0, 1.0)
@@ -61,7 +62,7 @@ for iter in range(n_iter):
         if random.uniform(0.0, 1.0) < weight[new_position] / weight[position]: 
             position = new_position
     pos_list.append(position)
-
+"""
 
 
 pylab.plot(weight)
