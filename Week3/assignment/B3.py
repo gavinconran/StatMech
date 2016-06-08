@@ -41,9 +41,9 @@ def show_conf(L, sigma, title, fname):
 
 
 # Set / deduce simulation parameters
-N = 256 #4 # number of disks
+N = 64 #4 # number of disks
 N_sqrt = int(math.sqrt(N))
-eta = 0.42 #0.72 #0.5 # covering density, eta
+eta = 0.42 #0.5 # covering density, eta
 sigma = math.sqrt(eta / (N * math.pi)) # deduce sigma from eta
 delta = 0.3 * sigma
 
@@ -70,7 +70,7 @@ f.close()
 
 
 # Run simulation
-n_steps = 1000
+n_steps = 10000
 for steps in range(n_steps):
     # key element: random choice of one disk whose coorditaes we alter slightly
     a = random.choice(L)
@@ -85,7 +85,8 @@ for steps in range(n_steps):
             disk = move_disk(disk)
 
 # print out final configuration
-show_conf(L, sigma, 'valid configuration graph', '64_disk_final_configuration.png')
+show_conf(L, sigma, 'valid configuration graph', '64_disk_eta_042.png')
+
 
 
 

@@ -1,7 +1,12 @@
+## C3.py
+## B3.py plus:
+## calculation of Psi_6 
+
+
 # Replicating Alder & Wainwright's first phase transition in a continuous 2-D system 
 # using a numerical simulation based on Markov-chain Monte Carlo simulations
 
-import random, math, pylab, os
+import random, math, pylab, os, cmath
 
 # function to compute distsnce beween 2 disks (with periodic boundary conditions)
 def dist(x,y):
@@ -36,10 +41,36 @@ def show_conf(L, sigma, title, fname):
     pylab.close()
 
 
+# function computes the distance vector, corrected for periodic boundary conditions. 
+def delx_dely(x, y):
+    d_x = (x[0] - y[0]) % 1.0
+    if d_x > 0.5: d_x -= 1.0
+    d_y = (x[1] - y[1]) % 1.0
+    if d_y > 0.5: d_y -= 1.0
+    return d_x, d_y
+
+# Computed Psi_6, the Global Order Parameter
+def Psi_6(L, sigma):
+    sum_vector = 0j
+    for i in range(N):
+        vector  = 0j
+        n_neighbor = 0
+        for j in range(N):
+            if dist(L[i], L[j]) < 2.8 * sigma and i != j:
+                n_neighbor += 1
+                dx, dy = delx_dely(L[j], L[i])
+                angle = cmath.phase(complex(dx, dy))
+                vector += cmath.exp(6.0j * angle)
+        if n_neighbor > 0:
+            vector /= n_neighbor
+        sum_vector += vector
+    return sum_vector / float(N)
+
+
 # Set / deduce simulation parameters
 N = 64 #4 # number of disks
 N_sqrt = int(math.sqrt(N))
-eta = 0.42 #0.5 # covering density, eta
+eta = 0.72 #0.5 # covering density, eta
 sigma = math.sqrt(eta / (N * math.pi)) # deduce sigma from eta
 delta = 0.3 * sigma
 
@@ -66,8 +97,21 @@ f.close()
 
 
 # Run simulation
-n_steps = 10000
+psi_6 = 0.0  # used to sum values of psi_6 for a particular eta
+mean_psi_6 = [] # list to store absolute mean value for an eta
+eta_for_psi_6 = [] # list to store eta
+n_steps = 1000000
 for steps in range(n_steps):
+    # compute psi_6 every 100 steps
+    if (steps % 100 == 0):
+        psi_6 += Psi_6(L, sigma)
+    # decrease eta every 10000 steps
+    if (steps % 10000 == 0):
+        mean_psi_6.append(abs(psi_6/float(100)))
+        eta_for_psi_6.append(eta)
+        eta -= 0.02
+        # terminagte simulation when eta < 0.2
+        if eta < 0.2: break
     # key element: random choice of one disk whose coorditaes we alter slightly
     a = random.choice(L)
     b = [a[0] + random.uniform(-delta, delta), a[1] + random.uniform(-delta, delta)]
@@ -80,8 +124,15 @@ for steps in range(n_steps):
         for disk in L:
             disk = move_disk(disk)
 
-# print out final configuration
-show_conf(L, sigma, 'valid configuration graph', '64_disk_eta_042.png')
+# plot of the mean absolute value of Psi_6 as a function of density eta
+pylab.xlabel('$eta$', fontsize=14)
+pylab.ylabel('$Global Order Parameter', fontsize=14)
+pylab.title('Mean absolute value of Psi_6 as a function of density eta')
+pylab.plot(eta_for_psi_6, mean_psi_6)
+pylab.savefig('plot-Global_Order_Parameter.png')
+pylab.show()
+
+
 
 
 
