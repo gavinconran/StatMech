@@ -95,28 +95,16 @@ for a in L:
    f.write(str(a[0]) + ' ' + str(a[1]) + '\n')
 f.close()
 
-print "eta: ", eta
-print "psi: ", Psi_6(L, sigma)
 # Run simulation
 psi_6 = 0.0  # used to sum values of psi_6 for a particular eta
 mean_psi_6 = [] # list to store absolute mean value for an eta
 eta_for_psi_6 = [] # list to store eta
 n_steps = 1000000
 for steps in range(n_steps):
-    # compute psi_6 every 100 steps
-    if (steps % 100 == 0):
-        psi_6 += Psi_6(L, sigma)
-    # decrease eta every 10000 steps
-    if (steps % 10000 == 0):
-        mean_psi_6.append(abs(psi_6/float(100)))
-        #mean_psi_6.insert(0, abs(psi_6/float(100))) 
-        eta_for_psi_6.append(eta)
-        #eta_for_psi_6.insert(0, eta)
-        eta -= 0.02
-        # terminagte simulation when eta < 0.2
-        if eta < 0.2: break
+    
     # key element: random choice of one disk whose coorditaes we alter slightly
     a = random.choice(L)
+    
     b = [a[0] + random.uniform(-delta, delta), a[1] + random.uniform(-delta, delta)]
     # Compute the min. distance between all points (includes boundary conditions
     min_dist = min(dist(b, c) for c in L if c != a)
@@ -127,13 +115,36 @@ for steps in range(n_steps):
         for disk in L:
             disk = move_disk(disk)
 
+    # compute psi_6 every 100 steps
+    if (steps != 0 and steps % 100 == 0):
+        
+        psi_6 += abs(Psi_6(L, sigma))
+    # decrease eta every 10000 steps
+    if (steps != 0 and steps % 10000 == 0):
+        psi_mean = psi_6/float(100)
+        print "psi_mean: ", psi_mean, " eta: ", eta 
+        mean_psi_6.append(psi_mean)
+        psi_6 = 0.0
+        eta_for_psi_6.append(eta)
+        #eta_for_psi_6.insert(0, eta)
+        eta -= 0.02
+        sigma = math.sqrt(eta / (N * math.pi)) # deduce sigma from eta
+        delta = 0.3 * sigma
+        # terminagte simulation when eta < 0.2
+        if eta < 0.2: break
+
 # plot of the mean absolute value of Psi_6 as a function of density eta
 pylab.xlabel('$eta$', fontsize=14)
 pylab.ylabel('$Global Order Parameter$', fontsize=14)
 pylab.title('Mean absolute value of Psi_6 as a function of density eta')
-#mean_psi_6.reverse()
-#eta_for_psi_6.reverse()
-pylab.plot(eta_for_psi_6, mean_psi_6, 'bs')
+
+# Rearrange lists for plotting
+#mean_psi_6.pop(); mean_psi_6.pop()
+#eta_for_psi_6.pop(); eta_for_psi_6.pop()
+mean_psi_6.reverse()
+eta_for_psi_6.reverse()
+
+pylab.plot(eta_for_psi_6, mean_psi_6, marker='o', linestyle='--', color='b')
 pylab.savefig('Plot_Global_Order_Parameter.png')
 pylab.show()
 
