@@ -104,7 +104,6 @@ for steps in range(n_steps):
     
     # key element: random choice of one disk whose coorditaes we alter slightly
     a = random.choice(L)
-    
     b = [a[0] + random.uniform(-delta, delta), a[1] + random.uniform(-delta, delta)]
     # Compute the min. distance between all points (includes boundary conditions
     min_dist = min(dist(b, c) for c in L if c != a)
