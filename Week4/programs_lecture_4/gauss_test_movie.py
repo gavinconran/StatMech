@@ -7,8 +7,8 @@ def gauss_test(sigma):
     r = sigma * math.sqrt(2.0 * Psi)
     x = r * math.cos(phi)
     y = r * math.sin(phi)
-    #return [x, y]
-    return [Psi]
+    return [x, y]
+    #return [Psi]
 
 # exact distrubution:
 list_x = [i * 0.1 for i in xrange(-40, 40)]
