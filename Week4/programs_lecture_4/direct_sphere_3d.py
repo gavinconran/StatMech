@@ -1,3 +1,5 @@
+# geneartes random points WITHIN the 3-D unit sphere
+
 import random, math
 
 nsamples = 100
