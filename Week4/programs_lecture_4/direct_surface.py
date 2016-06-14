@@ -1,3 +1,8 @@
+# extends to n dimensions
+# puts points randomly with a uniform distribution
+# on the surface of the hypersphere in n dimensions
+# This algo places random peebles on the surface of a n-dimensional hypersphere
+
 import random, math
 
 dimensions = 5

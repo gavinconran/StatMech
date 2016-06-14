@@ -1,3 +1,9 @@
+# prints re-normalised points on the surface
+# of a 3-D maintaining it's isotrophic properties.
+# Basically this algo places random peebles on the surface of a sphere
+# Isotrophy means that the distribution points (the probability distribution)
+# is uniform on the surface of the sphere.
+
 import random, math, pylab, mpl_toolkits.mplot3d
 
 x_list, y_list, z_list = [],[],[]

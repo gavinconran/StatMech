@@ -1,3 +1,6 @@
+# Python' random.gauss() uses same basic algo (Box-Muller) to
+# generate standard iid random numbers
+
 import random
 
 nsamples = 100
