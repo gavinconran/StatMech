@@ -1,3 +1,7 @@
+# Note that we do not need to introduce any cut-off as the Markov chain algorithm 
+# does not have any problem coping with the infinite probability density.
+# unlike the Direct method in "reject_inv_sqrt_cut.py"
+
 import random, math, pylab
 
 x = 0.2

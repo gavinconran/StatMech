@@ -1,3 +1,7 @@
+# f(x) diverges making choosing a cut-ff point for and y probleatic
+# As we raise the cut-off the higher the rejection rate becomes
+# This cut-off in y is not exponetially small - DANGER!!! -> MUST BE AVOIDED
+
 import random, math, pylab
 
 y_max = 100.0

@@ -1,3 +1,7 @@
+# Direct Sampling Rejection Algorithm
+# CUTS off the tails of the distribution
+# Not a problem for a Gaussian distrubution as as x -> 0 then f(x) -> 0 (convergence)
+
 import random, math
 
 y_max = 1.0 / math.sqrt(2.0 * math.pi)
