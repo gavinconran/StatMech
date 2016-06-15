@@ -1,3 +1,6 @@
+# ich is optimalRejection free algo for sampling a non-uniform discrete distribution
+# which is optimal
+
 import random, pylab
  
 N = 5

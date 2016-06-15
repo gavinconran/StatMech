@@ -1,6 +1,10 @@
+# Rejection free algorithm for sampling
+# BUT it is not optimal
+
 import random
 
 # bisection search to find the bin corresponding to eta
+# Logarithmic search
 def bisection_search(eta, w_cumulative):
     kmin = 0
     kmax = len(w_cumulative)
