@@ -9,7 +9,7 @@ for trial in xrange(n_trials):
     Upsilon = random.uniform(0.0, 1.0)
     # calculate x from the inverse error function
     x = math.sqrt(2.0) * scipy.special.erfinv(2.0 * Upsilon - 1.0)
-    data.append(x)
+    data.append(Upsilon)
     #print x
 
 
