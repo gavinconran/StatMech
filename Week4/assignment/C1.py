@@ -12,6 +12,8 @@ from operator import mul
 dd=200
 dimensions = range(1, dd)
 Qs = []
+Vol = []
+Ana=[]
 
 # function to calculate the volume of a n-dimensional hypersphere
 def V_sph(dim):
@@ -48,6 +50,8 @@ for d in dimensions:
     # this is the ratio of the sphere volume for d=4 to the sphere volume for d=3  
     Q = 2 * n_hits / float(n_trials)   
     Qs.append(Q)
+    Vol.append(2.0 * np.prod(Qs))
+    Ana.append(Qs[-1] * V_sph(d))
     
 
 # compute and print approxiate and exact values for the volume of a 200-d unit sphere
@@ -57,6 +61,16 @@ print "Exact V_sph(",dd,"): ", Qs[-1] * V_sph(d)
 ### Used for testing when d_max = 4
 #print "Approx. V_sph(",d,"): ",  2 * Qs[0] * Qs[1] * Qs[2] 
 #print "Approx. V_sph(",d,"): ", math.pi**2/float(2)
+
+pylab.plot(dimensions, Ana, c='red', linewidth=2.0, label='Analytic')
+pylab.plot(dimensions, Vol, c='blue', linewidth=2.0, label='Monte Carlo')
+pylab.title('$Vol(d)$ $versus$ $dimension$', fontsize = 25)
+pylab.xlabel('$Dimension$', fontsize = 20)
+pylab.ylabel('$Vol(d)$', fontsize = 20)
+pylab.yscale('log')
+pylab.legend(loc='upper right')
+pylab.savefig('C2_d=200.png')
+pylab.show()
 
 
 
