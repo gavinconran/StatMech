@@ -8,7 +8,7 @@ import random, math
 # simulation starting point
 x, y, z = 0.0, 0.0, 0.0
 delta = 0.1
-n_trials = 400000
+n_trials = 40000000
 n_hits = 0
 for i in range(n_trials):
     del_x, del_y, del_z = random.uniform(-delta, delta), random.uniform(-delta, delta), random.uniform(-delta, delta)
