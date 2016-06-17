@@ -50,7 +50,7 @@ pylab.plot(x, y, c='red', linewidth=2.0)
 pylab.title('$Norm(r)$ $versus$ $r$', fontsize = 25)
 pylab.xlabel('$r$', fontsize = 20)
 pylab.ylabel('$Norm(r)$', fontsize = 20)
-pylab.savefig('B1_d=20.png')
+pylab.savefig('B1_d=%d.png' %d) 
 pylab.show()
 
 

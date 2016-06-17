@@ -69,7 +69,7 @@ pylab.xlabel('$Dimension$', fontsize = 20)
 pylab.ylabel('$Vol(d)$', fontsize = 20)
 pylab.yscale('log')
 pylab.legend(loc='upper right')
-pylab.savefig('C2_d=200.png')
+pylab.savefig('C2_d=%d.png' %dd) 
 pylab.show()
 
 
