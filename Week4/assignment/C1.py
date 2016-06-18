@@ -2,6 +2,7 @@
 # Modified from B2.py
 # works for general d
 # Computes the volume of a n-dimensioanl sphere
+# Compares Numerical (Monte carlo) and analytic techniques for the computtaion
 
 import random, math, pylab
 import numpy as np

@@ -1,43 +1,49 @@
-# C1.py
-# Modified from B2.py
-# works for general d
+# C2.py
+# Modified from C1.py
+# works for general d (d=20) 
 # Computes the volume of a n-dimensioanl sphere
+# Compares Numerical (Monte carlo) and analytic techniques for the computtaion
+# You will need to install prettytable for this to work
 
 import random, math, pylab
 import numpy as np
 from operator import mul
+from prettytable import PrettyTable
 
 
 # no of dimensions
-dd=20
-trials = [1, 10, 100, 1000, 10000]
+d=20
+trials = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000]
 n_runs = 10
-delta = 0.1
+
+Avg_Vols = []  # MC Vol
+Exacts =   []  # Analytical Vol
+Errors = []  # Errors
+Diffs = [] #  difference between the Monte Carlo and exact results for V_sph(20)
 
 # function to calculate the volume of a n-dimensional hypersphere
-def V_sph(dim):
+def V_sph_fun(dim):
     return math.pi ** (dim / 2.0) / math.gamma(dim / 2.0 + 1.0)
 
 
 # for different dimensions
-for t in trials:
-    print "trial = ", t
-    
-    for r in range(0, n_runs):
-        print "run = ", r
-        x = [0.0] * dd
+for n_trials in trials:    
+    Vol = []
+    Vol2 = []
+    Ana = []
+    Qs = []
+    # run simulation 10 times
+    for run in range(0, n_runs):
+        x = [0.0] * d
+        delta = 0.1
         n_hits = 0
         old_radius_square = 0.0
-        Qs = []
-        Vol = []
-        Vol2 = []
-        Ana=[]
+                
         # simulation starting point
-        for i in range(t):
-            print "i = ", i
+        for i in range(n_trials):
             # Instead of modifying all components of x at a time, as we did in markov_pi.py, 
             # modify only one component at each iteration i
-            k = random.randint(0, dd - 1)
+            k = random.randint(0, d - 1)
             x_old_k = x[k]
             x_new_k = x_old_k + random.uniform(-delta, delta)
     
@@ -53,27 +59,38 @@ for t in trials:
 
         # print <Q_4>, the average value
         # this is the ratio of the sphere volume for d=4 to the sphere volume for d=3  
-        Q = 2 * n_hits / float(t)   
+        Q = 2 * n_hits / float(n_trials)   
         Qs.append(Q)
+        # compute the volme from this simulation
+        V_sph = 2.0 * np.prod(Qs)
+        Vol.append(V_sph)
+        V_sph2 = V_sph**2
+        Vol2.append(V_sph2)
+        V_ana = Qs[-1] * V_sph_fun(d)
+        Ana.append(V_ana)
+
+    # Compute the Volumes(MC and analtical), error and difference
+    Avg_V_sph = sum(Vol) / float(len(Vol))
+    Avg_V_sph2 = sum(Vol2) / float(len(Vol2))
+    Avg_Ana_V_sph = sum(Ana) / float(len(Ana))
+    error = math.sqrt(Avg_V_sph2 - Avg_V_sph**2) / math.sqrt(len(Vol))
+    difference = Avg_V_sph - Avg_Ana_V_sph
     
 
-    # compute and print approxiate and exact values for the volume of a 200-d unit sphere
-    print "Approx. V_sph(",dd,"): ", 2.0 * np.prod(Qs)
-    print "Approx. V_sph2(",dd,"): ", (2.0 * np.prod(Qs))**2
-    print "Exact V_sph(",dd,"): ", Qs[-1] * V_sph(dd)
+    # Add approx vol, Exact Vol, Error, and difference to appropriate lists 
+    Avg_Vols.append(Avg_V_sph)    
+    Exacts.append(Avg_Ana_V_sph)
+    Errors.append(error)
+    Diffs.append(difference)
+
+#print out results
+t = PrettyTable(['n_trials', '<V_sph(20)>', 'V_sph(20) exact' , 'error', 'difference'])
+for i in range(len(trials)):
+    t.add_row([trials[i], Avg_Vols[i], Exacts[i], Errors[i], Diffs[i]])
+print t
 
 
-"""
-pylab.plot(dimensions, Ana, c='red', linewidth=2.0, label='Analytic')
-pylab.plot(dimensions, Vol, c='blue', linewidth=2.0, label='Monte Carlo')
-pylab.title('$Vol(d)$ $versus$ $dimension$', fontsize = 25)
-pylab.xlabel('$Dimension$', fontsize = 20)
-pylab.ylabel('$Vol(d)$', fontsize = 20)
-pylab.yscale('log')
-pylab.legend(loc='upper right')
-pylab.savefig('C2_d=%d.png' %dd) 
-pylab.show()
-"""
+
 
 
 
