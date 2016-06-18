@@ -34,7 +34,8 @@ for i in range(n_trials):
         n_hits += 1
         #data.append(math.sqrt(old_radius_square))
     # must include all samples- not just acceped ones
-    data.append(math.sqrt(new_radius_square))
+    # also, cannot have any radius > 1
+    data.append(math.sqrt(old_radius_square))
 
 # print <Q_4>, the average value
 # this is the ratio of the sphere volume for d=4 to the sphere volume for d=3  
