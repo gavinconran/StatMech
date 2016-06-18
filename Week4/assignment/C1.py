@@ -10,7 +10,7 @@ from operator import mul
 
 
 # no of dimensions
-dd=200
+dd=20
 dimensions = range(1, dd)
 Qs = []
 Vol = []
@@ -30,7 +30,7 @@ for d in dimensions:
     old_radius_square = 0.0
 
     # simulation starting point
-    for i in range(n_trials):
+    for i in range(1, n_trials):
         # Instead of modifying all components of x at a time, as we did in markov_pi.py, 
         # modify only one component at each iteration i
         k = random.randint(0, d - 1)
@@ -52,12 +52,12 @@ for d in dimensions:
     Q = 2 * n_hits / float(n_trials)   
     Qs.append(Q)
     Vol.append(2.0 * np.prod(Qs))
-    Ana.append(Qs[-1] * V_sph(d))
+    Ana.append(V_sph(d))
     
 
 # compute and print approxiate and exact values for the volume of a 200-d unit sphere
 print "Approx. V_sph(",dd,"): ", 2.0 * np.prod(Qs)
-print "Exact V_sph(",dd,"): ", Qs[-1] * V_sph(d)
+print "Exact V_sph(",dd,"): ", V_sph(dd)
 
 ### Used for testing when d_max = 4
 #print "Approx. V_sph(",d,"): ",  2 * Qs[0] * Qs[1] * Qs[2] 
