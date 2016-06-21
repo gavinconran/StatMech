@@ -1,4 +1,4 @@
-import math, random
+import math, random, pylab
 
 def rho_free(x, y, beta):    # free off-diagonal density matrix
     return math.exp(-(x - y) ** 2 / (2.0 * beta)) 
@@ -9,6 +9,7 @@ dtau = beta / N
 delta = 1.0                                       # maximum displacement on one slice
 n_steps = 1000000                                 # number of Monte Carlo steps
 x = [0.0] * N                                     # initial path
+data = []
 for step in range(n_steps):
     k = random.randint(0, N - 1)                  # random slice
     knext, kprev = (k + 1) % N, (k - 1) % N       # next/previous slices
@@ -22,3 +23,5 @@ for step in range(n_steps):
     if random.uniform(0.0, 1.0) < new_weight / old_weight:
         x[k] = x_new
     print x
+    
+
