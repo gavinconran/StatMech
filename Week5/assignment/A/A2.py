@@ -49,7 +49,7 @@ for k in range(50000):
     
     if random.uniform(0.0, 1.0) <  \
         min(1, (psi_n(x_new, n) / psi_n(x, n))**2):
-        #min(1, psi_n_square(x_new, n) / psi_n_square(x, n)):
+        ##min(1, psi_n_square(x_new, n) / psi_n_square(x, n)):
         x = x_new 
 
     m = random.randrange(-1, 2, 2)
