@@ -1,3 +1,6 @@
+# calculates free density matrix using matrix squaring (Property 1: Convolution)
+# sine/cosine version
+
 import math
 
 # simmetric wavefunctions

@@ -1,3 +1,9 @@
+# calculates free density matrix using matrix squaring (Property 1: Convolution)
+# complex version
+# with graphics
+# gives same result as sine/cosine version
+
+
 import math, cmath, pylab
 
 ntot = 21   # odd number

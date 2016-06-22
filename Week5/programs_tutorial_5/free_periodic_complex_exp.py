@@ -1,3 +1,6 @@
+# calculates free density matrix using matrix squaring (Property 1: Convolution)
+# complex version
+
 import math, cmath
 
 ntot = 21   # odd number

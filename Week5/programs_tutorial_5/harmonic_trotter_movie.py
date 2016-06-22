@@ -1,3 +1,9 @@
+# calculates density matrix using the Trotter expansion (Property 3: Convolution)
+# sine/cosine version
+# with graphics
+# gives same result as complex version
+
+
 import math, pylab
 
 # density matrix for a free particle (exact)

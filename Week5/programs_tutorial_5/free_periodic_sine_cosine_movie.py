@@ -1,3 +1,9 @@
+# calculates free density matrix using matrix squaring (Property 1: Convolution)
+# sine/cosine version
+# with graphics
+# gives same result as complex version
+
+
 import math, pylab
 
 # simmetric wavefunctions
@@ -29,3 +35,4 @@ pylab.title('$\\beta$=%s (sine/cosine)' % beta)
 pylab.xlabel('$x$', fontsize=16)
 pylab.ylabel('$x\'$', fontsize=16)
 pylab.savefig('plot-periodic-sine_cosine.png')
+pylab.show()
