@@ -4,23 +4,14 @@
 # using the Metropolis algorithm for acceptance
 # samples positions x according to the probability pi(x) = psi_0(x)^2
 
-
 import random, math, pylab
 
-def Energy(n):
-    return n + 0.5
+# Used fros STEP 1
+# n state wave function
+def psi_n(x, n):
+    return (1 / math.pi**0.25) * math.exp(-x**2/float(2))
 
-def psi_n(n, x):
-    En = Energy(n) + 0.5
-    return (1 / math.pi**0.25) * math.exp(-x**2/float(2)) + En
-
-# Ground state wave function squared
-def psi_n_sq(x):
-    En = Energy(n) + 0.5
-    return ((1 / math.pi**0.25) * math.exp(-x**2/float(2)) + En)** 2
-
-
-# returns a list of psi values for given x poisition for a given energy state, n
+# used for STEP 2
 def psi_n_square(x, n):
     if n == -1:
         return 0.0
@@ -32,48 +23,71 @@ def psi_n_square(x, n):
                        math.sqrt((k - 1.0) / k) * psi[k - 2])
         return psi[n] ** 2
 
+# Compute Energy of a state n
+def E_n(n):
+    return n + 0.5
 
-# construct waveforms
-n_states = 4
-grid_x = [i * 0.2 for i in range(-25, 26)]
-psi = {}
-n=0
-beta = 0.2 # 1 # 5
-T = 1 / beta # temperatutre, T
-delta = 0.1
-data = []
+# Compute Exact Quantum Probability Distribution
+def prob_quant(x, Beta):
+    return math.sqrt(math.tanh(Beta/float(2)) / math.pi) * math.exp(- x**2 * math.tanh(Beta/float(2))) 
 
-for k in range(50000):
-    x = random.choice(grid_x)
-    x_new = x + random.uniform(-delta, delta)
+# Compute Exact Classical Probability Distribution
+def prob_classic(x, Beta):
+    return math.sqrt(Beta/ (2*math.pi)) * math.exp(-Beta * x**2/float(2)) 
+
+# Helper function for A2 step 1
+def step1(x_new, x, n):
+    return min(1, (psi_n(x_new, n) / psi_n(x, n)))**2
+
+# Helper function for A2 step 2
+def step2(x_new, x, n_new, n, Beta):
+    return min(1, (psi_n_square(x_new, n) / psi_n_square(x, n)) * math.exp(-Beta * (E_n(n_new) - E_n(n))))
+
+
+# Beta is proportional to 1 / T
+BetaList = [5, 1 , 0.2] 
+n_trials = 100000
+for Beta in BetaList:
+    # Initialise variables
+    x = 0.0
+    delta = 0.1
+    n = 0
+    data = []
+    # apply markov-chain Monte carlo sampling with Metropolis acceptance
+    # to approximate the finte temperature quantaum probability distribution
+    for k in range(n_trials):
+        x_new = x + random.uniform(-delta, delta)
+
+        # step 1: move (n,x) to (n, x')
+        if random.uniform(0.0, 1.0) < step1(x_new, x, n):
+            x = x_new 
+
+        # step 2:
+        m = random.randrange(-1, 2, 2)
+        n_new = n + m
+
+#Notice that this function returns 0 when n=-1. This is useful to simplify the acceptance probability for the n-changing move, #since we want to reject all moves that go from n=0 to n=-1)
+
+        if m > 0 and psi_n_square(x, n) > 0 and random.uniform(0.0, 1.0) <  step2(x_new, x, n_new, n, Beta):    
+            n = n_new
     
-    if random.uniform(0.0, 1.0) <  \
-        min(1, (psi_n(x_new, n) / psi_n(x, n))**2):
-        ##min(1, psi_n_square(x_new, n) / psi_n_square(x, n)):
-        x = x_new 
+        data.append(x)
 
-    m = random.randrange(-1, 2, 2)
-    n_new = n + m
-
-    if (n_new > 0) and random.uniform(0.0, 1.0) <  \
-        min(1, (psi_n(x, n) / psi_n(x, n))**2 * math.exp(-beta*(Energy(n_new-Energy(n))))):
-        n = n_new
-
-#modify the program further, and add a move which keeps x fixed and changes n to m = n +/-1. Such a move from (n, x) #to (m = n +/-1, x) should be accepted with the p=min(1, (psi_m(x)/psi_n(x))^2 * exp(-beta*(E_m-E_n)). Moves to m < #0 must be proposed (piles of pebbles!!), but they should always be rejected.
-
-
-        
-
-    data.append(x)
-
-pylab.hist(data, 100, normed = 'True')
-x = [a/float(1000) for a in range(-3000, 3000)]
-y = [psi_n_sq(a) for a in x] 
-pylab.plot(x, y, c='red', linewidth=2.0)
-
-pylab.title('Theoretical Gaussian distribution $\pi(x)$ and \
-    \nnormalized histogram for '+str(len(data))+' samples', fontsize = 18)
-pylab.xlabel('$x$', fontsize = 30)
-pylab.ylabel('$\pi(x)$', fontsize = 30)
-pylab.savefig('plot_markov_gauss_finite_temp.png')
-pylab.show()
+    # Create Graphic
+    pylab.figure()
+    pylab.hist(data, 100, normed = 'True')
+    x = [a/float(1000) for a in range(-3000, 3000)]
+    # Plot exact Quantum Probability Distribution
+    y_quant = [prob_quant(a, Beta) for a in x] 
+    pylab.plot(x, y_quant, c='red', linewidth=2.0, label='Quantum')
+    # Plot exact Classical Probability Distribution
+    y_classic = [prob_classic(a, Beta) for a in x] 
+    pylab.plot(x, y_classic, c='green', linewidth=2.0, label="Classical")
+    pylab.title('Normalized histogram for '+str(len(data))+' samples\
+        \nfor Beta = ' +str(Beta), fontsize = 18)
+    pylab.xlabel('$x$', fontsize = 20)
+    pylab.ylabel('$\pi(x)$', fontsize = 20)
+    pylab.legend(loc='best')
+    pylab.savefig('%d_plot_finite_Temp_B=%d.png' % (n_trials, Beta))
+    
+#pylab.show()
