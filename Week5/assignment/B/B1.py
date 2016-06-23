@@ -19,9 +19,10 @@ def rho_harmonic_trotter(grid, beta):
 def prob_quant(x, Beta):
     return math.sqrt(math.tanh(Beta/float(2)) / math.pi) * math.exp(- x**2 * math.tanh(Beta/float(2))) 
 
-x_max = 5.0
+x_max = 5 # 5 #50.0
 nx = 100
 dx = 2.0 * x_max / (nx - 1)
+print "dx = ", dx, " x_max = ", x_max
 x = [i * dx for i in range(-(nx - 1) / 2, nx / 2 + 1)] 
 beta_tmp = 2.0 ** (-8)                   # initial value of beta (power of 2)
 beta     = 2.0 ** 2                           # actual value of beta (power of 2)
