@@ -50,6 +50,7 @@ pylab.plot(x, y_quant, 'ro', c='red', linewidth=2.0, label='Analytic')
 pylab.title('Normalized histogram for Beta = ' +str(beta), fontsize = 18)
 pylab.xlabel('$x$', fontsize = 20)
 pylab.ylabel('$\pi(x)$', fontsize = 20)
+pylab.xlim(-2.0, 2.0)
 pylab.legend(loc='best')
 pylab.savefig('plot_finite_Temp_Beta=%d.png' % beta) # % beta)
 
