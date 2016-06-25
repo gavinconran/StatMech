@@ -22,7 +22,6 @@ def prob_quant(x, Beta):
 x_max = 5 # 5 #50.0
 nx = 100
 dx = 2.0 * x_max / (nx - 1)
-print "dx = ", dx, " x_max = ", x_max
 x = [i * dx for i in range(-(nx - 1) / 2, nx / 2 + 1)] 
 beta_tmp = 2.0 ** (-8)                   # initial value of beta (power of 2)
 beta     = 2.0 ** 2                           # actual value of beta (power of 2)
@@ -47,12 +46,18 @@ pylab.plot(x, pi_of_x, c='blue', linewidth=2.0, label='Estimate')
 y_quant = [(prob_quant(a, beta)) for a in x]  
 pylab.plot(x, y_quant, 'ro', c='red', linewidth=2.0, label='Analytic')
 
-pylab.title('Normalized histogram for Beta = ' +str(beta), fontsize = 18)
+pylab.title('Matrix Multiplication normalized histogram \
+        \nfor Beta = ' +str(beta), fontsize = 18)
+
+
+pylab.title('Matrix Multiplication Normalized histogram\
+            \nfor Beta = ' +str(beta), fontsize = 18)
 pylab.xlabel('$x$', fontsize = 20)
 pylab.ylabel('$\pi(x)$', fontsize = 20)
 pylab.xlim(-2.0, 2.0)
 pylab.legend(loc='best')
 pylab.savefig('plot_finite_Temp_Beta=%d.png' % beta) # % beta)
+pylab.show()
 
 """
 # graphics output
