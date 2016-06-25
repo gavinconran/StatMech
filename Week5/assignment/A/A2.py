@@ -68,7 +68,7 @@ for Beta in BetaList:
 
     # Create Graphic
     pylab.figure()
-    pylab.hist(data, 100, normed = 'True')
+    pylab.hist(data, 100, normed = 'True', label = 'Monte Carlo')
     x = [a/float(1000) for a in range(-6000, 6000)]
     # Plot exact Quantum Probability Distribution
     y_quant = [prob_quant(a, Beta) for a in x] 
@@ -76,8 +76,13 @@ for Beta in BetaList:
     # Plot exact Classical Probability Distribution
     y_classic = [prob_classic(a, Beta) for a in x] 
     pylab.plot(x, y_classic, c='green', linewidth=2.0, label="Classical")
-    pylab.title('Normalized histogram for '+str(len(data))+' samples\
-        \nfor Beta = ' +str(Beta), fontsize = 18)
+
+    pylab.title('Theoretical Gaussian distribution $\pi(x)$ and \
+        \nnormalized histogram for '+str(len(data))+' samples\
+        \nand for Beta = ' +str(Beta), fontsize = 18)
+
+    #pylab.title('Normalized histogram for '+str(len(data))+' samples\
+    #    \nfor Beta = ' +str(Beta), fontsize = 18)
     pylab.xlabel('$x$', fontsize = 20)
     pylab.ylabel('$\pi(x)$', fontsize = 20)
     pylab.legend(loc='best')

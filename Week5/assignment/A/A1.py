@@ -20,13 +20,15 @@ for k in range(5000000):
         x = x_new 
     data.append(x)
 
-pylab.hist(data, 100, normed = 'True')
+pylab.hist(data, 100, normed = 'True', label = "Monte Carlo")
 x = [a/float(1000) for a in range(-3000, 3000)]
 y = [psi_0_sq(a) for a in x] 
-pylab.plot(x, y, c='red', linewidth=2.0)
+pylab.plot(x, y, c='red', linewidth=2.0, label = "Quantum")
 pylab.title('Theoretical Gaussian distribution $\pi(x)$ and \
     \nnormalized histogram for '+str(len(data))+' samples', fontsize = 18)
 pylab.xlabel('$x$', fontsize = 30)
 pylab.ylabel('$\pi(x)$', fontsize = 30)
+pylab.xlim(-2.0, 2.0)
+pylab.legend(loc='best')
 pylab.savefig('plot_markov_gauss_ground_state.png')
 pylab.show()
