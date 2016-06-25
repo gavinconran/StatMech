@@ -1,4 +1,6 @@
 # B2.py
+# uses Path Integral Monte Carlo to compute Density Matrix
+# Also plots Density Matrix computed using Matrix Multiplication from B1.py
 
 
 import math, random, pylab
@@ -46,14 +48,15 @@ for step in range(n_steps):
 ## Create Graphic
 pylab.figure()
 # Histogram of formed from path-Integral Monte Carlo
-pylab.hist(data, 100, normed = 'True')
+pylab.hist(data, 100, normed = 'True', label = "Path Integral MC")
 
 # PDF of formed from matrix-multiplication (convolution)
 filename="data_harm_matrixsquaring_beta4.0.dat"
 list_x, list_y = read_file(filename)
-pylab.plot(list_x, list_y, c='red', linewidth=2.0, label='Quantum MC')
-pylab.title('Path Integral normalized histogram for '+str(len(data))+' samples\
-        \nfor Beta = ' +str(beta), fontsize = 18)
+pylab.plot(list_x, list_y, c='red', linewidth=2.0, label='Matrix Mult')
+pylab.title('Path Integral normalized histogram \
+        \nfor '+str(len(data)), fontsize = 18)
+
 pylab.xlabel('$x$', fontsize = 20)
 pylab.ylabel('$\pi(x)$', fontsize = 20)
 pylab.xlim(-2.0, 2.0)
