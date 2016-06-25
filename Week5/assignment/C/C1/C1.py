@@ -6,7 +6,7 @@ import math, numpy, pylab
 
 # returns anharmonic potential
 def V(x, cubic, quartic):
-    return x**2/float(2) + cubic * x**3 + quartic * x**4
+    return x ** 2 / 2.0 + cubic * x ** 3 + quartic * x ** 4
 
 
 # Free off-diagonal density matrix
@@ -14,32 +14,28 @@ def rho_free(x, xp, beta):
     return (math.exp(-(x - xp) ** 2 / (2.0 * beta)) /
             math.sqrt(2.0 * math.pi * beta))
 
-# Harmonic density matrix in the Trotter approximation (returns the full matrix)
-def rho_harmonic_trotter(grid, beta):
-    return numpy.array([[rho_free(x, xp, beta) * \
-                         numpy.exp(-0.5 * beta * 0.5 * (x ** 2 + xp ** 2)) \
-                         for x in grid] for xp in grid])
-
 # anharmonic density matrix in the Trotter approximation (returns the full matrix)
 def rho_anharmonic_trotter(grid, beta, cubic, quartic):
     return numpy.array([[rho_free(x, xp, beta) * \
-                         numpy.exp(-0.5 * beta * V(x, cubic, quartic) + V(xp, cubic, quartic)) \
+                         numpy.exp(-0.5 * beta * V(x, cubic, quartic)) * \
+                         numpy.exp(-0.5 * beta * V(xp, cubic, quartic)) \
                          for x in grid] for xp in grid])
 
 # Compute Exact Quantum Probability Distribution
 def prob_quant(x, Beta):
     return math.sqrt(math.tanh(Beta/float(2)) / math.pi) * math.exp(- x**2 * math.tanh(Beta/float(2))) 
 
+
+# Initialise variables
 x_max = 5 # 5 #50.0
 nx = 100
 dx = 2.0 * x_max / (nx - 1)
-print "dx = ", dx, " x_max = ", x_max
 x = [i * dx for i in range(-(nx - 1) / 2, nx / 2 + 1)] 
 beta_tmp = 2.0 ** (-8)                   # initial value of beta (power of 2)
 beta     = 2.0 ** 2                           # actual value of beta (power of 2)
-cubic = 0
-quartic = 0
-rho = rho_harmonic_trotter(x, beta_tmp, cubic, quartic)  # density matrix at initial beta
+cubic = -1.0
+quartic = 1.0 # 0
+rho = rho_anharmonic_trotter(x, beta_tmp, cubic, quartic)  # density matrix at initial beta
 while beta_tmp < beta:
     rho = numpy.dot(rho, rho)
     rho *= dx
@@ -54,25 +50,18 @@ for j in range(nx + 1):
 f.close()
 
 # plot probability distribution (approx and exact)
-pylab.plot(x, pi_of_x, c='blue', linewidth=2.0, label='Estimate')
+pylab.plot(x, pi_of_x, c='blue', linewidth=2.0, label='an-harmonic')
 
 # Plot exact Quantum Probability Distribution
 y_quant = [(prob_quant(a, beta)) for a in x]  
-pylab.plot(x, y_quant, 'ro', c='red', linewidth=2.0, label='Analytic')
+pylab.plot(x, y_quant, 'g', c='red', linewidth=2.0, label='harmonic')
 
-pylab.title('Normalized histogram for Beta = ' +str(beta), fontsize = 18)
+pylab.title('Harmonic and An-harmonic Density Matrix\
+             \nDistributions for Beta = ' +str(beta), fontsize = 18)
 pylab.xlabel('$x$', fontsize = 20)
 pylab.ylabel('$\pi(x)$', fontsize = 20)
 pylab.xlim(-2.0, 2.0)
 pylab.legend(loc='best')
 pylab.savefig('C1_plot_anharmonic_oscillator_Beta=%d.png' % beta) # % beta)
+pylab.show()
 
-"""
-# graphics output
-pylab.imshow(rho, extent=[-x_max, x_max, -x_max, x_max], origin='lower')
-pylab.colorbar()
-pylab.title('$\\beta = 2^{%i}$' % math.log(beta, 2))
-pylab.xlabel('$x$', fontsize=18)
-pylab.ylabel('$x\'$', fontsize=18)
-pylab.savefig('plot-harmonic-rho.png')
-"""
