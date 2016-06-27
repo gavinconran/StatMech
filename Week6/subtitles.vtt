@@ -1,0 +1,997 @@
+WEBVTT
+
+1
+00:00:03.220 --> 00:00:08.580
+Hello, bonjour, cama-i, ainngai,
+
+2
+00:00:09.450 --> 00:00:15.050
+Welcome to the the sixth week of Statistical Mechanics: Algorithms and Computations,
+
+3
+00:00:15.050 --> 00:00:18.570
+from the Physics Department of Ecole Normale supérieure.
+
+4
+00:00:19.510 --> 00:00:27.950
+We are right now in the middle of our three-weeks module on quantum physics and quantum statistical mechanics
+
+5
+00:00:28.980 --> 00:00:36.220
+And we have just started our second half of this course.
+
+6
+00:00:37.140 --> 00:00:40.550
+So let me start with a brief exposition
+
+7
+00:00:40.900 --> 00:00:45.490
+of where we have come from and where we stand right now.
+
+8
+00:00:46.700 --> 00:00:52.260
+This exposition will be in the light of what we already learnt
+
+9
+00:00:52.260 --> 00:00:56.730
+about the connection between sampling and integration.
+
+10
+00:00:58.330 --> 00:01:03.680
+So, five weeks ago we started by considering pebbles
+
+11
+00:01:03.680 --> 00:01:08.010
+on the Monte Carlo beach and on the heliport
+
+12
+00:01:08.010 --> 00:01:14.980
+the partition function was the integral in x from -1 to 1
+
+13
+00:01:14.980 --> 00:01:21.310
+and the integral in y from -1 to 1 of pi(x,y)
+
+14
+00:01:21.310 --> 00:01:24.050
+which was a constant equal to one.
+
+15
+00:01:25.690 --> 00:01:30.760
+We then moved to a discussion of hard disks
+
+16
+00:01:32.020 --> 00:01:40.200
+the partition function now was this integral, with the statistical weight pi(x)
+
+17
+00:01:40.820 --> 00:01:48.110
+which was equal to 1 if the configuration was legal, and 0 if it was illegal
+
+18
+00:01:50.100 --> 00:01:55.730
+last week we then moved to a discussion of quantum physics
+
+19
+00:01:57.310 --> 00:02:02.830
+The partition function now was the path integral
+
+20
+00:02:02.830 --> 00:02:09.500
+over dx_0, .., dx_(N-1)
+
+21
+00:02:09.500 --> 00:02:17.470
+of the statistical weight which was the density matrix between x_0 and x_1, beta/N
+
+22
+00:02:17.470 --> 00:02:21.100
+density matrix of x_1 and x_2, beta/N
+
+23
+00:02:21.100 --> 00:02:26.680
+density matrix of x_(N-1) and x_0, beta/N.
+
+24
+00:02:27.810 --> 00:02:30.680
+This is the path integral
+
+25
+00:02:31.250 --> 00:02:37.970
+We sampled it using a naive path integral Monte Carlo algorithm
+
+26
+00:02:37.970 --> 00:02:41.970
+that resembled what we already did for hard-disks.
+
+27
+00:02:43.240 --> 00:02:49.550
+But rather than picking one disk at random, we picked one bead at random,
+
+28
+00:02:49.550 --> 00:02:54.520
+then we moved it a little bit to the left or to the right,
+
+29
+00:02:54.520 --> 00:03:00.400
+and accepted it with the Metropolis acceptance probability.
+
+30
+00:03:02.380 --> 00:03:09.450
+This week, we will remain within this picture of quantum physics.
+
+31
+00:03:10.580 --> 00:03:20.580
+We will present a providential sampling algorithm that goes back to Paul Levy in 1940.
+
+32
+00:03:20.580 --> 00:03:29.350
+It is a rejection-free direct-sampling algorithm, something we never achieved for hard-disks.
+
+33
+00:03:30.630 --> 00:03:36.230
+Let me briefly explain what the Lévy algorithm achieves.
+
+34
+00:03:36.970 --> 00:03:43.540
+You pick a starting position x at tau=0
+
+35
+00:03:43.950 --> 00:03:49.190
+and a final position x' at tau=beta
+
+36
+00:03:49.840 --> 00:03:58.920
+and then you fill in the path between x and x' in one set.
+
+37
+00:03:59.800 --> 00:04:08.860
+You can do this with a number of slices that is as large as you want: 100, 1000, 1000000..
+
+38
+00:04:10.050 --> 00:04:16.870
+Here we have a free particle, but an analogous Levy construction
+
+39
+00:04:16.870 --> 00:04:20.870
+exists also for a particle in a harmonic trap.
+
+40
+00:04:22.500 --> 00:04:30.260
+Lévy's algorithm is really famous, and not just in quantum statistical mechanics.
+
+41
+00:04:31.420 --> 00:04:36.950
+It exists under various names in the physics of interfaces
+
+42
+00:04:36.950 --> 00:04:44.720
+in numerical analysis, in statistics, in financial mathematics,
+
+43
+00:04:45.850 --> 00:04:48.720
+and in electrical engineering.
+
+44
+00:04:49.770 --> 00:04:55.730
+The path you see here illustrates the Heisenberg uncertainty principle:
+
+45
+00:04:56.490 --> 00:05:05.590
+the founding principle of quantum mechanics, and one of the pillars of quantum statistical physics.
+
+46
+00:05:06.820 --> 00:05:13.520
+At low temperature (large beta) the path fluctuates wildly
+
+47
+00:05:13.970 --> 00:05:17.700
+and this means that the particle position x
+
+48
+00:05:17.700 --> 00:05:19.370
+is uncertain.
+
+49
+00:05:19.370 --> 00:05:25.980
+Next week, the Levy construction algorithm will be a crucial element
+
+50
+00:05:25.980 --> 00:05:32.250
+of many-body simulations, and then we will fathom
+
+51
+00:05:32.250 --> 00:05:38.370
+the second pillar of quantum statistical mechanics: the indiscernability of particles,
+
+52
+00:05:38.820 --> 00:05:42.370
+and their bosonic or fermionic nature
+
+53
+00:05:42.370 --> 00:05:46.770
+and the curious Bose-Einstein condensation
+
+54
+00:05:48.440 --> 00:05:55.880
+To discuss Bose-Einstein condensation, we will again mostly use the path integral language
+
+55
+00:05:57.160 --> 00:06:01.400
+but to understand why this is a condensation
+
+56
+00:06:02.370 --> 00:06:08.720
+we need to consider wavefunctions and energy levels.
+
+57
+00:06:10.320 --> 00:06:14.390
+And this is what we will do in this week's tutorial
+
+58
+00:06:15.980 --> 00:06:20.260
+where we will get down to the art of bosonic statistics
+
+59
+00:06:21.270 --> 00:06:30.970
+and we'll solve a model of finite  (small) number of particles in a three-dimensional harmonic trap
+
+60
+00:06:31.920 --> 00:06:40.420
+In this week's homework session we consolidate what we learn in the lecture through practical calculations.
+
+61
+00:06:41.290 --> 00:06:46.560
+For simplicity, we remain within the framework of the harmonic potential
+
+62
+00:06:47.850 --> 00:06:53.780
+but the firework of sampling strategies and re-weighting schemes
+
+63
+00:06:53.780 --> 00:06:58.190
+applies to a much wider range of problems
+
+64
+00:06:58.190 --> 00:07:02.740
+than just to four little quantum particles in a harmonic trap.
+
+65
+00:07:04.220 --> 00:07:09.480
+Again, you must understand the great range of applications
+
+66
+00:07:09.480 --> 00:07:14.130
+of our concepts inside and outside physics.
+
+67
+00:07:15.350 --> 00:07:20.260
+Quantum paths are closely related to interfaces
+
+68
+00:07:20.260 --> 00:07:25.050
+as you see here for an interface between two liquids.
+
+69
+00:07:26.790 --> 00:07:34.350
+Quantum paths are also closely related to what is studied by financial analysts.
+
+70
+00:07:34.350 --> 00:07:37.900
+So ,let's get started
+
+71
+00:07:37.900 --> 00:07:43.820
+with week 6 of Statistical Mechanics: Algorithms and Computations.
+
+72
+00:07:48.370 --> 00:07:53.700
+We recall once more the final subject of last week's lecture
+
+73
+00:07:55.570 --> 00:07:59.970
+We arrived at a representation of the partition function
+
+74
+00:07:59.970 --> 00:08:03.970
+of a quantum particle in a harmonic potential
+
+75
+00:08:03.970 --> 00:08:07.150
+as a sum
+
+76
+00:08:07.150 --> 00:08:15.450
+or rather as a multiple integral over paths with a statistical weight giving the weight
+
+77
+00:08:15.450 --> 00:08:16.870
+of each path.
+
+78
+00:08:17.830 --> 00:08:25.730
+You see the partition function really is a sum over all paths.
+
+79
+00:08:27.740 --> 00:08:31.170
+We sampled this partition function
+
+80
+00:08:31.760 --> 00:08:37.200
+using a naive algorithm, naive_harmonic_path.py
+
+81
+00:08:38.430 --> 00:08:45.000
+Its key element was that we sampled a random bead k
+
+82
+00:08:46.080 --> 00:08:50.060
+and proposed a random move
+
+83
+00:08:50.060 --> 00:08:55.140
+from x_k to x_k + delta_x
+
+84
+00:08:56.520 --> 00:09:03.410
+and accepted or rejected the move with the Metropolis acceptance probability.
+
+85
+00:09:05.020 --> 00:09:13.440
+naive_harmonic_path satisfies detailed balance, is aperiodic and irreducible
+
+86
+00:09:14.660 --> 00:09:17.440
+but it painfully slow.
+
+87
+00:09:18.610 --> 00:09:23.460
+If we start at a configuration as the one shown here
+
+88
+00:09:24.700 --> 00:09:30.920
+the next configuration will be very little different from the one that we had already,
+
+89
+00:09:32.690 --> 00:09:37.990
+because we only move one bead and we move it only by a little bit.
+
+90
+00:09:40.600 --> 00:09:43.070
+If we made larger moves,
+
+91
+00:09:43.590 --> 00:09:48.030
+we would get into troubles with the 1/2 rule.
+
+92
+00:09:49.020 --> 00:09:53.490
+We would reject all the moves, and would not move either.
+
+93
+00:09:54.830 --> 00:10:00.940
+So you see that a simulation using naive_harmonic_path
+
+94
+00:10:00.940 --> 00:10:07.910
+would be very very slow in exploring all configurations in our system.
+
+95
+00:10:09.770 --> 00:10:14.310
+To make progress let us move back by two steps
+
+96
+00:10:15.190 --> 00:10:21.420
+first step: we take away the harmonic potential and consider a free particle,
+
+97
+00:10:22.830 --> 00:10:32.040
+second step: instead of sampling the value of k at each step, we keep k fixed.
+
+98
+00:10:33.020 --> 00:10:36.040
+We move the particle x_k
+
+99
+00:10:36.760 --> 00:10:42.910
+for fixed values of x_(k-1) and x_(k+1)
+
+100
+00:10:42.910 --> 00:10:48.120
+as programmed in naive_path_slice.py.
+
+101
+00:10:48.530 --> 00:10:53.110
+So we move x_k with the Metropolis algorithm,
+
+102
+00:10:54.390 --> 00:11:01.210
+and here is the histogram of the positions of x_k, it looks like a Gaussian,
+
+103
+00:11:02.680 --> 00:11:05.440
+and in fact IT IS a Gaussian,
+
+104
+00:11:07.170 --> 00:11:10.950
+because the probability pi(x_k)
+
+105
+00:11:10.950 --> 00:11:18.910
+is put together from the density matrix rho_free(x_(k-1), x_k)
+
+106
+00:11:18.910 --> 00:11:23.770
+and rho_free(x_k, x_(k+1))
+
+107
+00:11:25.450 --> 00:11:33.380
+The two are Gaussians, and their product is also a Gaussian for x_k.
+
+108
+00:11:35.340 --> 00:11:40.880
+So the distribution pi(x_k) is a Gaussian
+
+109
+00:11:40.880 --> 00:11:47.190
+with mean value (x_(k-1) + x_(k+1) ) / 2
+
+110
+00:11:47.190 --> 00:11:53.990
+and a variance sigma^2 = delta_tau / 2
+
+111
+00:11:54.550 --> 00:12:00.260
+Now, there is no reason in the world to use the Metropolis algorithm
+
+112
+00:12:00.260 --> 00:12:05.280
+as we know that the distribution of x_k is a Gaussian.
+
+113
+00:12:06.380 --> 00:12:14.150
+We should sample x_k from this Gaussian distribution with the correct mean value and variance.
+
+114
+00:12:14.970 --> 00:12:19.180
+You might be interested to implement this idea
+
+115
+00:12:19.180 --> 00:12:25.240
+in your version of naive_harmonic_path, as we did here for the free particle
+
+116
+00:12:27.450 --> 00:12:33.480
+but rather than doing it, let us slightly generalize this problem
+
+117
+00:12:34.400 --> 00:12:37.630
+and consider a position x_k
+
+118
+00:12:38.350 --> 00:12:45.230
+sandwiched between positions x' and x''
+
+119
+00:12:45.230 --> 00:12:53.530
+with intervals in tau: delta_tau' and delta_tau''
+
+120
+00:12:54.840 --> 00:13:02.680
+The probability distribution of x_k given x' and x''
+
+121
+00:13:02.680 --> 00:13:06.680
+is the product of two free density matrices:
+
+122
+00:13:07.650 --> 00:13:14.650
+the density matrix rho_free(x', x_k, delta_tau')
+
+123
+00:13:15.530 --> 00:13:24.930
+and the density matrix rho_free(x_k, x'', delta_tau'')
+
+124
+00:13:26.170 --> 00:13:32.670
+Both these density matrices are Gaussians and their product is also a Gaussian.
+
+125
+00:13:33.860 --> 00:13:41.170
+Putting all this together and noticing that in this distribution x_k is the variable
+
+126
+00:13:41.170 --> 00:13:45.170
+and x' and x'' are fixed
+
+127
+00:13:45.870 --> 00:13:53.360
+we find that the probability distribution pi(x_k) given x' and x''
+
+128
+00:13:53.360 --> 00:13:58.650
+is a Gaussian with mean value and variance as shown here.
+
+129
+00:13:59.570 --> 00:14:07.830
+Before continuing, please take a moment to download, run and modify the programs that we discussed in this section.
+
+130
+00:14:08.930 --> 00:14:14.730
+On the Coursera website, you'll find the program naive_path_slice.py
+
+131
+00:14:15.620 --> 00:14:19.510
+that treats the case of one variable x_k
+
+132
+00:14:19.510 --> 00:14:23.680
+sandwiched in between x' and x''
+
+133
+00:14:24.930 --> 00:14:30.310
+This is an innocent little program, but it should convince you
+
+134
+00:14:30.310 --> 00:14:34.310
+that the above formulas that we used are correct.
+
+135
+00:14:35.840 --> 00:14:46.160
+In any case, running this program, you'll understand that using the Metropolis algorithm in this situation is useless:
+
+136
+00:14:46.160 --> 00:14:51.880
+you might just as well sample x_k from the appropriate Gaussian.
+
+137
+00:14:53.630 --> 00:14:59.100
+Then - again - you'll find the naive_harmonic_path.py
+
+138
+00:15:00.520 --> 00:15:05.550
+In this algorithm, you could replace the Metropolis algorithm
+
+139
+00:15:05.550 --> 00:15:10.380
+for the x_k by the Gaussian direct sampling
+
+140
+00:15:11.520 --> 00:15:16.090
+but better wait for greater things to come.
+
+141
+00:15:21.300 --> 00:15:23.950
+In naive_path_sampling
+
+142
+00:15:24.370 --> 00:15:31.010
+we propose x_k with a flat distribution and accept it with a Gaussian,
+
+143
+00:15:32.290 --> 00:15:41.950
+The mismatch between proposed and accepted moves generates of course the rejection rate in the Metropolis algorithm.
+
+144
+00:15:43.980 --> 00:15:48.870
+We could modify the naive path sampling algorithm
+
+145
+00:15:48.870 --> 00:15:57.200
+by proposing x_k with the appropriate Gaussian distribution and there would be no rejections any more.
+
+146
+00:15:58.690 --> 00:16:04.520
+But we can put the conditional probability pi(x_k)
+
+147
+00:16:04.520 --> 00:16:06.680
+to much better use.
+
+148
+00:16:07.840 --> 00:16:13.570
+In fact, pi(x_k | x', x'')
+
+149
+00:16:14.160 --> 00:16:20.780
+gives the statistical weight of all paths that start at x'
+
+150
+00:16:20.780 --> 00:16:27.700
+that pass through x_k and that end up at x''.
+
+151
+00:16:30.030 --> 00:16:36.400
+Let's apply this idea for x_k = x_1
+
+152
+00:16:36.400 --> 00:16:45.210
+x' = x_0 and x'' = x_N.
+
+153
+00:16:45.210 --> 00:16:54.160
+We can sample the position x_1, given x_0 and x_N
+
+154
+00:16:55.600 --> 00:17:02.030
+Between the freshly sampled value of x_1 and x_N
+
+155
+00:17:02.440 --> 00:17:06.740
+we can then sample the value of x_2
+
+156
+00:17:07.760 --> 00:17:13.910
+and then of x_3 and then of x_4
+
+157
+00:17:15.800 --> 00:17:20.110
+and eventually the entire path
+
+158
+00:17:20.900 --> 00:17:27.620
+In Python, this gives the following little algorithm: levy_free_path.py
+
+159
+00:17:28.340 --> 00:17:35.570
+and look here at a configuration for a path with N=50000
+
+160
+00:17:35.570 --> 00:17:39.570
+produced by levy_free_path.py
+
+161
+00:17:40.460 --> 00:17:44.520
+It has no correlation with previous paths
+
+162
+00:17:45.030 --> 00:17:49.160
+and its construction has caused no rejection.
+
+163
+00:17:50.940 --> 00:17:56.790
+In the limit N going to infinity, x(tau)
+
+164
+00:17:56.790 --> 00:18:00.790
+is a continuous function of tau
+
+165
+00:18:00.790 --> 00:18:06.030
+As a curiosity, let us discuss for a moment
+
+166
+00:18:06.030 --> 00:18:11.200
+the return condition, that makes the Levy construction non-trivial.
+
+167
+00:18:12.070 --> 00:18:18.680
+The path has to return to the position x' at tau=beta
+
+168
+00:18:19.540 --> 00:18:25.890
+without this return condition, you would simply have a random walk,
+
+169
+00:18:27.600 --> 00:18:33.730
+and you would sample the position x_1 from a given position x_0,
+
+170
+00:18:33.730 --> 00:18:41.320
+then we would sample the position x_2 from the given position x_1 as a Gaussian.
+
+171
+00:18:41.320 --> 00:18:47.180
+Then you would sample x_3 from x_2, x_4 from x_3,
+
+172
+00:18:47.180 --> 00:18:51.780
+and so on, until x_N from x_(N-1).
+
+173
+00:18:54.280 --> 00:19:08.030
+The partition function of this problem would be written as Z_random_walk = integral dx_1 .. dx_N
+
+174
+00:19:08.030 --> 00:19:15.670
+of the density matrices rho_free(x_0, x_1, beta/N)
+
+175
+00:19:15.670 --> 00:19:20.140
+until rho_free(x_(N-1),x_N,beta/N)
+
+176
+00:19:21.040 --> 00:19:30.810
+And notice that we would sample over the position x_N, that means we integrate over the variable x_N.
+
+177
+00:19:31.640 --> 00:19:37.920
+This is implemented in the algorithm continuous_random_walk.py
+
+178
+00:19:38.760 --> 00:19:48.240
+but of course the probability to hit the position x' at tau=beta
+
+179
+00:19:48.240 --> 00:19:52.980
+the probability that x_N = x' is equal to zero.
+
+180
+00:19:55.220 --> 00:20:02.520
+Now, let me tell you of a simple algorithm (trivial_path.py)
+
+181
+00:20:03.960 --> 00:20:06.520
+that will rectify the situation.
+
+182
+00:20:07.770 --> 00:20:17.120
+What you can do is that you sample the Gaussian random walk that goes to x_N rather than x',
+
+183
+00:20:17.120 --> 00:20:26.090
+then you pull back the position x_N by the value of (x_N - x')
+
+184
+00:20:27.530 --> 00:20:31.390
+and you pull back all the intermediate positions
+
+185
+00:20:31.390 --> 00:20:39.890
+by a value proportional to (x_N-x') * tau/beta.
+
+186
+00:20:42.350 --> 00:20:45.140
+This algorithm produces output
+
+187
+00:20:45.580 --> 00:20:50.930
+which is indistinguishable from the output of the Levy construction
+
+188
+00:20:50.930 --> 00:20:55.730
+but I leave it to you as an exercise to prove this.
+
+189
+00:20:56.120 --> 00:21:05.780
+Before moving on to next section, please take a moment to download, run and modify the algorithms we discussed right now.
+
+190
+00:21:06.950 --> 00:21:10.130
+There is the algorithm levy_free_path.py
+
+191
+00:21:11.150 --> 00:21:15.410
+In this algorithm you really can modify many aspects
+
+192
+00:21:16.640 --> 00:21:23.320
+there is no reason to first sample x_1 than x_2, x_3 and so on
+
+193
+00:21:24.010 --> 00:21:29.920
+you can rewrite your algorithm so that it first samples x_(N/2)
+
+194
+00:21:29.920 --> 00:21:35.820
+and fills in the path in the lower and upper parts separately.
+
+195
+00:21:37.380 --> 00:21:42.910
+Then there is the algorithm continuous_random_walk.py
+
+196
+00:21:43.840 --> 00:21:50.230
+and the mysterious pull-back algorithm: trivial_free_path.py.
+
+197
+00:21:51.580 --> 00:22:02.660
+try to understand - at least empirically - that this algorithm gives exactly the same output as the Levy construction.
+
+198
+00:22:06.730 --> 00:22:10.210
+We have sampled so far free quantum paths
+
+199
+00:22:10.720 --> 00:22:16.770
+continuous non-differentiable objects that correspond to the free Hamiltonian.
+
+200
+00:22:17.730 --> 00:22:29.120
+This is possible because the free density matrix is a Gaussian and product and integrals of Gaussians are again Gaussians.
+
+201
+00:22:30.760 --> 00:22:37.770
+For the harmonic density matrix, in Trotter approximation, the same is true.
+
+202
+00:22:38.350 --> 00:22:51.310
+It is given by a product over three Gaussians: two for the Trotter formula and the potential, and one for the free density matrix.
+
+203
+00:22:52.690 --> 00:22:56.140
+So at high temperature (small beta)
+
+204
+00:22:56.140 --> 00:23:09.350
+the harmonic density matrix is given by an exponential of two terms: one in (x-x')^2 and one in (x+x')^2
+
+205
+00:23:10.460 --> 00:23:16.500
+Under matrix squaring, the harmonic density matrix keeps this form
+
+206
+00:23:18.120 --> 00:23:24.580
+and an exact calculation shows that the explicit formula
+
+207
+00:23:24.580 --> 00:23:30.970
+for the harmonic density matrix at all temperatures is given by this expression.
+
+208
+00:23:31.890 --> 00:23:37.640
+The diagonal term rho_harm(x, x, beta)
+
+209
+00:23:37.640 --> 00:23:46.700
+is given by exp(-x^2 * tanh(beta/2))
+
+210
+00:23:46.990 --> 00:23:49.930
+The fact that it is a Gaussian
+
+211
+00:23:50.230 --> 00:23:57.000
+allows us to derive an algorithm for the Levy construction of the particle in a harmonic trap
+
+212
+00:23:58.330 --> 00:24:01.770
+This is levy_harmonic_path.py
+
+213
+00:24:01.770 --> 00:24:06.040
+and it is as simple as the free Levy construction.
+
+214
+00:24:06.810 --> 00:24:17.850
+Again, we can now choose a configuration x at tau=0 and x' at tau=beta
+
+215
+00:24:17.850 --> 00:24:21.850
+and the algorithm fills in
+
+216
+00:24:21.850 --> 00:24:25.850
+a configuration, a path, between 0 and beta,
+
+217
+00:24:25.850 --> 00:24:31.060
+without rejections and without using Markov chain methods.
+
+218
+00:24:32.720 --> 00:24:38.990
+Of course, the path is now constrained through the harmonic potential
+
+219
+00:24:39.930 --> 00:24:46.750
+and its extension is fixed by the oscillator strength omega
+
+220
+00:24:46.750 --> 00:24:48.550
+and the temperature.
+
+221
+00:24:48.550 --> 00:24:54.530
+Before continuing, please take a moment to download, run and modify
+
+222
+00:24:54.800 --> 00:24:59.130
+the program we just discussed: levy_harmonic_path.py
+
+223
+00:24:59.750 --> 00:25:06.030
+Besides this program and the graphics version, you'll also find a short fact-sheet
+
+224
+00:25:06.030 --> 00:25:13.720
+that gives the relevant formulas and derives the harmonic density matrix through matrix squaring.
+
+225
+00:25:14.680 --> 00:25:21.690
+You also find on the website a multidimensional version of this program
+
+226
+00:25:21.690 --> 00:25:28.120
+We have no problem understanding that a three-dimensional quantum path can be sampled
+
+227
+00:25:28.120 --> 00:25:33.780
+by independent Levy constructions in x, y and z.
+
+228
+00:25:38.370 --> 00:25:45.650
+In this lecture, we studied the path integral picture of quantum statistical mechanics
+
+229
+00:25:45.650 --> 00:25:52.800
+and the providential path sampling algorithm that goes back to Levy in 1940.
+
+230
+00:25:54.690 --> 00:26:05.480
+In free space and in any dimension, this algorithm allows to sample a path from a position x at time tau=0
+
+231
+00:26:05.480 --> 00:26:09.480
+to x' at tau=beta.
+
+232
+00:26:11.250 --> 00:26:19.350
+Notice that in this picture we are discussing a quantum system in one dimension: x
+
+233
+00:26:20.050 --> 00:26:26.140
+but it looks like a classical line-shaped object in two dimensions
+
+234
+00:26:27.750 --> 00:26:34.470
+It is for this reason that one says that a quantum system in one dimension
+
+235
+00:26:34.470 --> 00:26:41.440
+corresponds to a classical system in two dimensions, or more generally:
+
+236
+00:26:41.440 --> 00:26:49.040
+a quantum system in dimension d corresponds to a classical system in (d+1).
+
+237
+00:26:50.000 --> 00:26:55.150
+As the temperature gets lower, beta gets higher
+
+238
+00:26:55.870 --> 00:27:01.280
+and the extension of this space in all dimensions becomes infinite.
+
+239
+00:27:02.990 --> 00:27:08.000
+As we discussed, the Levy construction also exists for particles in a harmonic potential
+
+240
+00:27:09.000 --> 00:27:16.970
+and you will rely heavily on this to create your own Bose-Einstein condensate
+
+241
+00:27:16.970 --> 00:27:24.370
+that resembles very much the experimental condensates that were created in this glass cell.
+
+242
+00:27:25.700 --> 00:27:32.100
+So now it is time for you to download and run the program that we discussed
+
+243
+00:27:32.100 --> 00:27:36.630
+and to create a quantum path like the one shown here.
+
+244
+00:27:37.790 --> 00:27:42.370
+Create your own quantum path, with hundreds and thousands of points,
+
+245
+00:27:43.350 --> 00:27:49.940
+and print it out on glossy paper, make yourself a frame and hang it up in your room.
+
+246
+00:27:52.860 --> 00:27:56.470
+As mentioned, there are many exciting subjects
+
+247
+00:27:56.470 --> 00:28:02.870
+that we will discuss in this week's tutorial and we will discover in this week's homework.
+
+248
+00:28:04.700 --> 00:28:12.470
+So thanks for your attention and see you again next week in Statistical Mechanics: Algorithms and Computations
+
+249
+00:28:12.470 --> 00:28:16.720
+for a week devoted to Bose-Einstein condensation.
