@@ -1,8 +1,11 @@
 # solving time evolution of Schrodinger's equation as an initial value problem
+# uses Trotter decomposition to compute density matrix (without actually solving Schroinger equation)
+# and simple (delta-t) time-steppting discritisation
 # graphic shows Quantum tunnelling effect
 # only works in 1-D
 
 import numpy, pylab, os
+from mpl_toolkits.mplot3d import Axes3D
 
 # Fourier Transform
 def fourier_x_to_p(phi_x, dx):
