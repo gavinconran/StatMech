@@ -16,7 +16,7 @@ for s_0 in range(35):
         for s_2 in range(s_1, 35):
             for s_3 in range(s_2, 35):
                 for s_4 in range(s_3, 35):
-                    n_states += 1
+                    n_states += 1  # compute the number of states that contribute to partition function
                     state = [s_0, s_1, s_2, s_3, s_4]
                     E = sum(Energy[s] for s in state)
                     Z += math.exp(-beta * E)
