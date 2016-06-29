@@ -1,3 +1,5 @@
+# Applies Energy states in 3-D for multiple particles 
+
 Emax = 50
 States = []
 for E_x in range(Emax):
