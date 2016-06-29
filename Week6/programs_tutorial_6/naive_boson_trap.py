@@ -1,3 +1,7 @@
+# Studies the bosonic statistics and the Bose-Einstein condensation
+# for a problem of 5 bosons
+
+
 import math
 
 Energy = [0.0] + [1.0] * 3 + [2.0] * 6 + [3.0] * 10 + [4.0] * 15
@@ -6,6 +10,7 @@ n_states = 0
 Z = 0.0
 N0_mean = 0.0
 E_mean = 0.0
+# Compute Bosonic Partition Function
 for s_0 in range(35):
     for s_1 in range(s_0, 35):
         for s_2 in range(s_1, 35):
