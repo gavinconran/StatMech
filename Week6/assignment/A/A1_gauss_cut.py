@@ -1,4 +1,5 @@
 # A1.py
+# DIRECT SAMPLING REJECTION ALGO
 # part 1: proposes uniformly distributed configurations
 # part 2: accepts these configurations with the 
 # mixed harmonic and quartic weight pi(x,y)
@@ -14,7 +15,7 @@ def gauss_cut():
         if abs(x) <= 1.0:
             return x
 
-y_max = 1.0 / math.sqrt(2.0 * math.pi)
+y_max = 0.5 / math.sqrt(2.0 * math.pi) # 2-D therefore 0.5 rather than 1.0 numerator
 alpha = 0.5  #0.005 #1.0 #0.5
 nsamples = 1000000
 samples_x = []
@@ -26,7 +27,7 @@ for sample in xrange(nsamples):
         x = gauss_cut() #random.uniform(-1.0, 1.0)
         y = gauss_cut() #random.uniform(-1.0, 1.0)
         # adjust p
-        p = math.exp((-0.5 *(x ** 2 + y ** 2) - alpha * (x ** 4 + y ** 4)) * y_max )
+        p = math.exp((-0.5 * y_max  *(x ** 2 + y ** 2) - alpha * (x ** 4 + y ** 4)) )
         if random.uniform(0.0, 1.0) < p:
             break
     samples_x.append(x)
