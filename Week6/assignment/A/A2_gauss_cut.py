@@ -2,6 +2,8 @@
 # hit and run
 # break up pi(x,y) into a product of one-dimensional distributions. 
 # We use the Markov-chain method.
+# Markov-chain programs, because the outcome of the move depended on the present configuration
+# Nevertheless, a direct-sampling approach was used in the coordinate that was changed.
 
 import random, math, pylab
 
