@@ -33,17 +33,6 @@ for sample in xrange(nsamples):
     samples_x.append(x)
     samples_y.append(y)
 
-"""
-while n_accept < n_data:
-    y = random.uniform(0.0, y_max)
-    x = random.uniform(-x_cut, x_cut)
-    # calculate pi(x) using Gauss PDF and chech ti accept or not
-    # If y(x) below PDF accept
-    if y < math.exp( - x **2 / 2.0)/math.sqrt(2.0 * math.pi): 
-        n_accept += 1
-        print x
-"""
-
 # plot a 2-D histogram using the hexbin function
 pylab.hexbin(samples_x, samples_y, gridsize=50, bins=1000)
 pylab.axis([-1.0, 1.0, -1.0, 1.0])
