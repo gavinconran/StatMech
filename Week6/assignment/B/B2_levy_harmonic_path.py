@@ -26,7 +26,7 @@ x = [5.0] * N
 data = []
 Ncut = N/2
 
-n_steps = 400000
+n_steps = 40000
 for step in range(n_steps):
     x = levy_harmonic_path(x[0], x[0], dtau, N)
     # wrapping and partial freezing
@@ -34,7 +34,7 @@ for step in range(n_steps):
     k = random.randint(0, N - 1)
     data.append(x[k])
     
-    
+#print "data; ", data     
 
 pylab.hist(data, normed=True, bins=100, label='QMC')
 list_x = [0.1 * a for a in range (-30, 31)]
