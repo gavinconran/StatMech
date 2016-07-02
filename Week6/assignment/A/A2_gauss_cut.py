@@ -25,13 +25,15 @@ for step in range(nsteps):
     if step % 2 == 0:
         while True:
             x = gauss_cut() #random.uniform(-1.0, 1.0)
-            p = math.exp(-0.5 * oneD_max * x ** 2 - alpha * x ** 4 )
+            #p = math.exp(-0.5 * oneD_max * x ** 2 - alpha * x ** 4 )
+            p = math.exp(- alpha * x ** 4 )
             if random.uniform(0.0, 1.0) < p:
                 break
     else:
         while True:
             y = gauss_cut() #random.uniform(-1.0, 1.0)
-            p = math.exp(-0.5 * oneD_max * y ** 2 - alpha * y ** 4 )
+            #p = math.exp(-0.5 * oneD_max * y ** 2 - alpha * y ** 4 )
+            p = math.exp(- alpha * y ** 4 )
             if random.uniform(0.0, 1.0) < p:
                 break
     samples_x.append(x)
