@@ -75,7 +75,7 @@ pylab.hist(data, normed=True, bins=100, label='QMC')
 list_x = [0.1 * a for a in range (-30, 31)]
 list_y = [math.sqrt(math.tanh(beta / 2.0)) / math.sqrt(math.pi) * \
           math.exp(-x ** 2 * math.tanh(beta / 2.0)) for x in list_x]
-pylab.plot(list_x, list_y, label='analytic')
+#pylab.plot(list_x, list_y, label='analytic')
 pylab.legend()
 pylab.xlabel('$x$')
 pylab.ylabel('$\\pi(x)$ (normalized)')
