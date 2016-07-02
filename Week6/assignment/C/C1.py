@@ -38,33 +38,38 @@ def levy_free_path(xstart, xend, dtau, N):
     return x
 
 # Initialise variables
-beta = 1.0 #20.0
-N = 80
+beta = 20.0
+N = 100
 dtau = beta / N
 x = [5.0] * N
 data = []
-Ncut = N/2
-cubic = 0
-quartic = 0
-
+Ncut = N/20
+cubic = 0 #-1.0
+quartic = 0 #1.0 # 0
+accept = 0
 Weight_old = math.exp(sum(-V(a, cubic, quartic) * dtau for a in x))
 
 n_steps = 400000
 for step in range(n_steps):
     # Step 2: Construct a new path (x_new) between x[0] and x[0], from Levy_free_path.
-    x_new = levy_free_path(x[0], x[0], dtau, N)
+    x_new = levy_free_path(x[0], x[Ncut], dtau, Ncut) + x[Ncut:]  
     # Step 3: Compute its Trotter weight, the part of the statistical weight not yet taken into account by the path construction
     Weight_new = math.exp(sum(-V(a, cubic, quartic) * dtau for a in x_new))
     # Step 4: Accept the new path with probability min(1, Weight_new/ Weight_old)
     if random.uniform(0.0, 1.0) < min(1, Weight_new/ Weight_old):
         # Update the Weight_old
         Weight_old = Weight_new + math.exp(sum(-V(a, cubic, quartic) * dtau for a in x))
+        #print "Weight_old: ", Weight_old
         # Update the path
         x = x_new[:]
         # Wrap the path
         x = x[1:] + x[:1]
+        #x = x[Ncut:] + x[:Ncut]
+        accept += 1
     k = random.randint(0, N - 1)
     data.append(x[k])   
+
+print "accept: ", accept
 
 pylab.hist(data, normed=True, bins=100, label='QMC')
 list_x = [0.1 * a for a in range (-30, 31)]
@@ -74,7 +79,11 @@ pylab.plot(list_x, list_y, label='analytic')
 pylab.legend()
 pylab.xlabel('$x$')
 pylab.ylabel('$\\pi(x)$ (normalized)')
-pylab.title('levy_free_path (beta=%s, N=%i)' % (beta, N))
+
+pylab.title('Levy Free Path (Beta=%s, N=%i) ' %(beta, N) + \
+            '\nNormalized Histogram (Cubic=%s, Quartic=%s) ' % (cubic, quartic), fontsize = 18)
+
+#pylab.title('levy_free_path (beta=%s, N=%i)' % (beta, N))
 pylab.xlim(-2, 2)
 pylab.savefig('plot_C1_beta%s.png' % beta)
 pylab.show()
