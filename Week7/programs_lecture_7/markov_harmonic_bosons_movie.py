@@ -77,6 +77,8 @@ for step in range(nsteps):
         positions[a_1] = b_1
         positions[a_2] = b_2
 
+
+# create graphic
 fig = pylab.figure()
 ax = mpl_toolkits.mplot3d.axes3d.Axes3D(fig)
 ax.set_aspect('equal')
