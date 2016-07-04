@@ -1,12 +1,17 @@
 # Bose-Einstein condensation.
 # At a well defined temperature, Bosons clump together in the center of the trap: this is Bose-Einstein condensation.
 # It was first achieved, in experimental harmonic traps just like ours , in 1995, by Cornell and Wieman, and also by Ketterle,
+# Note: no particle indices
+# positions x, y and z are the keys of a dictionary called positions, the positions for when tau=0
+# the values of the dictionary are the values of the positions when tau=beta, the positions of the permutation partners
 # Output: you see configurations x, y and z of about 1000 ideal bosons in an harmonic trap at termperature T.
 
 
 
 import random, math, pylab, mpl_toolkits.mplot3d
- 
+
+# used at multiples of the inverse temperature beta, corresponding to the length of the permutation cycle.
+# We use it to resample the positions of the entire cycle. 
 def levy_harmonic_path(k, beta):
     xk = tuple([random.gauss(0.0, 1.0 / math.sqrt(2.0 *
                 math.tanh(k * beta / 2.0))) for d in range(3)])
@@ -21,7 +26,9 @@ def levy_harmonic_path(k, beta):
         dummy = [random.gauss(x_mean[d], sigma) for d in range(3)]
         x.append(tuple(dummy))
     return x
- 
+
+# computes the off-diagonal harmonic density matrix.
+# We use it to organize the exchange of two elements. 
 def rho_harm(x, xp, beta):
     Upsilon_1 = sum((x[d] + xp[d]) ** 2 / 4.0 *
                     math.tanh(beta / 2.0) for d in range(3))
@@ -34,22 +41,29 @@ T_star = 0.6
 beta = 1.0 / (T_star * N ** (1.0 / 3.0))
 nsteps = 1000000
 positions = {}
+# initialise positions using levy_harmonic_path as in homework6 / C2.py
 for j in range(N):
     a = levy_harmonic_path(1, beta)
     positions[a[0]] = a[0]
+# for each particle move:
 for step in range(nsteps):
+    # sample random particle
     boson_a = random.choice(positions.keys())
     perm_cycle = []
+    # identify permuttaion cycle 
     while True:
         perm_cycle.append(boson_a)
         boson_b = positions.pop(boson_a)
         if boson_b == perm_cycle[0]: break
         else: boson_a = boson_b
     k = len(perm_cycle)
+    # sample the new Levy quantum path for entire cycle from levy quantum path
     perm_cycle = levy_harmonic_path(k, beta)
     positions[perm_cycle[-1]] = perm_cycle[0]
     for j in range(len(perm_cycle) - 1):
         positions[perm_cycle[j]] = perm_cycle[j + 1]
+    # for each permutation move, sample two random particles
+    # atempt an exchange of their permutation partners
     a_1 = random.choice(positions.keys())
     b_1 = positions.pop(a_1)
     a_2 = random.choice(positions.keys())

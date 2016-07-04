@@ -15,6 +15,7 @@ for step in range(nsteps):
     j = random.randint(0, N - 1)
     # exchange positions
     L[i], L[j] = L[j], L[i]
+    # Rejection / acceptance according to Metropolice algo
     if tuple(L) in statistics: 
         statistics[tuple(L)] += 1
     else:
