@@ -37,7 +37,8 @@ low = levy_harmonic_path(2)
 high = low[:]
 data = []
 for step in xrange(nsteps):
-    # move 1: sample positions
+    # implements a transposition of the permutation as in permutation_sample.py 
+    # move 1: sample permutations
     if low[0] == high[0]:
         k = random.choice([0, 1])
         low[k] = levy_harmonic_path(1)[0]
@@ -47,8 +48,7 @@ for step in xrange(nsteps):
         high[1] = low[0]
         high[0] = low[1]
     data += low[:]
-    # move 2: sample permutations
-    # implements a transposition of the permutation as in permutation_sample.py 
+    # move 2: sample positions
     weight_old = (rho_harm_1d(low[0], high[0], beta) *
                   rho_harm_1d(low[1], high[1], beta))
     weight_new = (rho_harm_1d(low[0], high[1], beta) *

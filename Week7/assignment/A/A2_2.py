@@ -50,7 +50,7 @@ for beta in list_beta:
     prob_one_cycle = 0
     prob_two_cycle = 0
     for step in xrange(nsteps):
-        # move 1: 
+        # move 1: sample permutations
         # same cycle
         if low[0] == high[0]:
             k = random.choice([0, 1])
@@ -65,8 +65,7 @@ for beta in list_beta:
             # incresae count of two cycles
             prob_one_cycle += 1
         data += low[:]
-        # move 2: sample permutations
-        # implements a transposition of the permutation as in permutation_sample.py 
+        # move 2: sample positions
         weight_old = (rho_harm_1d(low[0], high[0], beta) *
                   rho_harm_1d(low[1], high[1], beta))
         weight_new = (rho_harm_1d(low[0], high[1], beta) *
