@@ -1,3 +1,6 @@
+# modified from permutation_sample.py from the lecture
+# so as to look at the permutation cycles
+
 import random
 
 N = 20
@@ -9,6 +12,9 @@ for step in range(nsteps):
     j = random.randint(0, N - 1)
     L[i], L[j] = L[j], L[i]
     if step % 100 == 0: 
+        # note the use of dictionaries
+        # keys are particles
+        # values being the permutations of the particles, that is their successor in the permutation cycle.
         cycle_dict = {}
         for k in range(N):
             cycle_dict[k] = L[k]

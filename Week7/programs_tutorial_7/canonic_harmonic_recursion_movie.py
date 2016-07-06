@@ -1,5 +1,15 @@
+# canonic_harmonic_recursion_movie.py
+# This recursion relation goes back to Landsberg in 1961.
+# It relates the partition function of a system of N ideal bosons
+# to the partition function of a single particle z
+# and the partition functions Z of systems with fewer particles.
+# So, we have arrived to an analytical solution
+
+
 import math, pylab
 
+# partitoon function of a single particle inside a 3-D harmonic trap
+# ground state shifted so Energy levels = 1,...,k
 def z(k, beta):
     return 1.0 / (1.0 - math.exp(- k * beta)) ** 3
 
