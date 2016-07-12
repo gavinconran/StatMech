@@ -1,3 +1,9 @@
+# heatbath_ising.py
+# alternative to using metropolis monte carlo method
+# program keeps track of and updates Energy E
+# so that we can easily obtain the specific heat of the system as a function of T
+
+
 import random, math
 
 L = 6
