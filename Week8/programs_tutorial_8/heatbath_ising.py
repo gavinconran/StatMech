@@ -2,6 +2,7 @@
 # alternative to using metropolis monte carlo method
 # program keeps track of and updates Energy E
 # so that we can easily obtain the specific heat of the system as a function of T
+# True markov-chain 
 
 
 import random, math
@@ -17,6 +18,8 @@ S = [random.choice([-1, 1]) for site in range(N)]
 E = -0.5 * sum(S[k] * sum(S[nn] for nn in nbr[k]) \
                                 for k in range(N))
 E_tot, E2_tot = 0.0, 0.0
+# using a random seed gurantees that any initial configuration wiil
+# after some time lead to the same sequence of configurations
 random.seed('123456')
 for step in range(nsteps):
     k = random.randint(0, N - 1)
