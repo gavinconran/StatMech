@@ -1,3 +1,8 @@
+# markov_ising.py
+# select a single spin and flip it
+# accept with metropois acceptance probability
+
+
 import random, math
 
 L = 32
