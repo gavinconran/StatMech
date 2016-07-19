@@ -1,3 +1,7 @@
+# dirset_sphere_disks.py
+# solves 13 sphere problem
+# naive appraoch 
+
 import random, math
 
 def unit_sphere():
@@ -6,7 +10,7 @@ def unit_sphere():
     return [xk / norm for xk in x]
 
 N = 13
-r = 0.25
+r = 0.25 #0.34 #0.3 #0.25
 attempts = 0
 while True:
     attempts += 1

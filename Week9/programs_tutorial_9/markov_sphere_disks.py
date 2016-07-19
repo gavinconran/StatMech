@@ -1,3 +1,6 @@
+# markov_sphere_disks.py
+# Markov-chain sampling
+
 import random, math
 
 def unit_sphere():

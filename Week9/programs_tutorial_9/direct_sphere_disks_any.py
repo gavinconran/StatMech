@@ -1,3 +1,6 @@
+# dirset_sphere_disks_any.py
+# adapted from direct_disks_any.py from tutorial 2
+
 import random, math
 
 def unit_sphere():

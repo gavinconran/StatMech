@@ -1,3 +1,8 @@
+# simulated_annealing_movie.py
+# Each step consits of:
+# 1 re-sizing
+# 10000 iterations of the Markov-chain algo
+
 import random, math, mayavi.mlab
 
 def unit_sphere():

@@ -20,6 +20,7 @@ r = 0.3
 nsteps = 5000000
 sigma  = 0.25
 gamma  = 0.15
+max_R = 0.0
 while True: 
     positions = [unit_sphere() for j in range(N)] 
     if minimum_distance(positions, N) > 2.0 * r: break
@@ -42,6 +43,9 @@ for step in xrange(nsteps):
         r = resize_disks(positions, r, N, gamma)
         R = 1.0 / (1.0 / r - 1.0)
         density = 1.0 * N / 2.0 * (1.0 - math.sqrt(1.0 - r ** 2))
+    #if R > max_R:
+    #    max_R = R
+    #    print "max_R: ", max_R
 print 'final r', r
 print 'final R', R
 print 'final density', density

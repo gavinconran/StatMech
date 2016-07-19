@@ -1,3 +1,6 @@
+# resize_disks.py
+# slightly swels disks while keeping configuration legal
+
 def minimum_distance(positions, N):
     dists = [math.sqrt(sum((positions[k][j] - positions[l][j]) ** 2 \
              for j in range(3))) for l in range(N) for k in range(l)]
