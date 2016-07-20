@@ -23,7 +23,7 @@ for run in runs:
             x = xnew
             acc_tot += 1
             acc_tmp += 1
-        x_av += x
+        #x_av += x
         
         # automatic step-size control
         if step % 100 == 0:
@@ -32,5 +32,6 @@ for run in runs:
             if acc_tmp < 40:
                 delta = delta/1.1
             acc_tmp = 0
+        x_av += x
 
     print 'run ', run, 'global acceptance ratio:', acc_tot / float(nsteps), ' : <x> =', x_av / float(nsteps)

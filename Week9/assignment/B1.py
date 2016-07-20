@@ -26,8 +26,9 @@ min_density = 0.78
 for gamma in gammas:
     print 'gamma', gamma
     for run in range(10): #  10):
-        print 'run', run
-        sigma  = 0.25
+        
+        sigma  = 0.00000025 #10.0 #1.0 #0.25
+        print 'run', run, ' sigma', sigma
         r = 0.0
         positions = [unit_sphere() for j in range(N)]
         n_acc = 0
